@@ -13,7 +13,8 @@ const defaultOrigins = [
   'http://localhost:5173',
   'http://127.0.0.1:3000',
   'https://sb-dss.web.app',
-  'https://sb-dss.firebaseapp.com'
+  'https://sb-dss.firebaseapp.com',
+  'https://sb-dss.onrender.com'
 ];
 
 const envOrigins = (process.env.CORS_ORIGINS || '')
