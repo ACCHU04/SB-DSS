@@ -1,6 +1,7 @@
 node_modules/
 backend/node_modules/
 backend/.env
+backend/*.db
 frontend/public/.DS_Store
 .firebase/
 dist/
