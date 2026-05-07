@@ -19,6 +19,36 @@ const PAGE_CONFIG = {
 let currentPage = 'dashboard';
 let appInitialized = false;
 
+function setSidebarOpen(open) {
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('mobile-nav-backdrop');
+  const toggle = document.getElementById('mobile-nav-toggle');
+  if (!sidebar || !backdrop || !toggle) return;
+
+  sidebar.classList.toggle('open', open);
+  backdrop.classList.toggle('open', open);
+  document.body.classList.toggle('nav-open', open);
+  toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+function initializeMobileNav() {
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('mobile-nav-backdrop');
+  const toggle = document.getElementById('mobile-nav-toggle');
+  if (!sidebar || !backdrop || !toggle) return;
+
+  toggle.addEventListener('click', () => {
+    const nextState = !sidebar.classList.contains('open');
+    setSidebarOpen(nextState);
+  });
+
+  backdrop.addEventListener('click', () => setSidebarOpen(false));
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) setSidebarOpen(false);
+  });
+}
+
 function navigate(page) {
   if (!PAGE_CONFIG[page]) return;
 
@@ -37,6 +67,11 @@ function navigate(page) {
 
   // Render page content
   PAGE_CONFIG[page].render();
+
+  // Auto-close mobile nav after selecting a section.
+  if (window.innerWidth <= 768) {
+    setSidebarOpen(false);
+  }
 }
 
 // ===== MODAL =====
@@ -74,6 +109,8 @@ function showToast(message, type = 'success') {
 function initializeMainApp() {
   if (appInitialized) return;
   appInitialized = true;
+
+  initializeMobileNav();
 
   // Set today's date
   const now = new Date();

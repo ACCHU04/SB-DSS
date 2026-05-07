@@ -251,6 +251,7 @@ body {
   transition: var(--transition);
   font-size: 14px;
   font-weight: 500;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -295,6 +296,41 @@ body {
   font-size: 20px;
   font-weight: 700;
   color: var(--ink);
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.mobile-nav-toggle {
+  display: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--mist);
+  background: var(--white);
+  color: var(--ink);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.mobile-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 46, 0.42);
+  z-index: 90;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.mobile-nav-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .topbar-right {
@@ -794,11 +830,126 @@ input:focus, select:focus, textarea:focus {
 ::-webkit-scrollbar-thumb:hover { background: var(--slate); }
 
 @media (max-width: 768px) {
-  #sidebar { transform: translateX(-240px); }
+  #sidebar {
+    transform: translateX(-240px);
+    width: 240px;
+    box-shadow: var(--shadow-lift);
+  }
   #sidebar.open { transform: translateX(0); }
   #main { margin-left: 0; }
   .grid-2, .grid-3 { grid-template-columns: 1fr; }
-  #page-content { padding: 16px; }
+  #page-content { padding: 14px; }
   .auth-panel { padding: 22px 18px; }
   .auth-actions { grid-template-columns: 1fr; }
+  .mobile-nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
+  body.nav-open { overflow: hidden; }
+
+  #topbar {
+    height: auto;
+    min-height: 56px;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .topbar-title {
+    font-size: 18px;
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 56vw;
+  }
+
+  .topbar-right {
+    gap: 8px;
+  }
+
+  #today-date {
+    display: none;
+  }
+
+  #auth-user-email {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .date-badge {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .card-header,
+  .card-body {
+    padding: 14px;
+  }
+
+  .stat-card {
+    padding: 14px;
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  th,
+  td {
+    padding: 9px 10px;
+    font-size: 12px;
+  }
+
+  .btn {
+    min-height: 38px;
+  }
+
+  .modal {
+    max-width: 100%;
+    max-height: 92vh;
+  }
+
+  .modal-body,
+  .modal-header,
+  .modal-footer {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .health-card {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .health-status {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .topbar-title {
+    max-width: 46vw;
+    font-size: 16px;
+  }
+
+  #auth-user-email {
+    display: none;
+  }
+
+  .stats-grid {
+    gap: 12px;
+  }
+
+  .chart-container {
+    height: 190px;
+  }
+
+  .toast {
+    right: 10px;
+    left: 10px;
+    max-width: none;
+  }
 }
